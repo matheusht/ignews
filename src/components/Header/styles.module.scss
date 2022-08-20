@@ -2,11 +2,13 @@
     height: 5rem;
     border-bottom: 1px solid var(--gray-800);
 }
+
 .headerContent {
     max-width: 1120px;
     height: 5rem;
-    padding: 0 2rem;
     margin: 0 auto;
+    padding: 0 2rem;
+
     display: flex;
     align-items: center;
 
@@ -14,13 +16,14 @@
         margin-left: 5rem;
         height: 5rem;
 
-        a{
+        a {
             display: inline-block;
             position: relative;
-            padding: 0 0.5rem ;
+            padding: 0 0.5rem;
             height: 5rem;
             line-height: 5rem;
             color: var(--gray-300);
+
             transition: color 0.2s;
 
             & + a {
@@ -30,10 +33,12 @@
             &:hover {
                 color: var(--white);
             }
+
             &.active {
                 color: var(--white);
                 font-weight: bold;
             }
+
             &.active::after {
                 content: '';
                 height: 3px;
@@ -46,8 +51,8 @@
             }
         }
     }
+
     button {
         margin-left: auto;
     }
-
 }

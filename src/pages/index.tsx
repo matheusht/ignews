@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import styles from './home.module.scss';
-import {SubscribeButton} from '../components/SubscribeButton';
-import {GetStaticProps} from 'next';
+import { GetStaticProps } from 'next'
+import Head from '../../node_modules/next/head';
+import { SubscribeButton } from '../components/SubscribeButton/index';
 import { stripe } from '../services/stripe';
+import styles from './home.module.scss';
 
 interface HomeProps {
   product: {
@@ -10,45 +10,50 @@ interface HomeProps {
     amount: number;
   }
 }
-export default function Home({product}: HomeProps) {
+
+export default function Home({ product }: HomeProps) {
+
+
+
   return (
     <>
       <Head>
-        <title>Home | ig.news</title>
+        <title> Home | ig.news</title>
       </Head>
       <main className={styles.contentContainer}>
         <section className={styles.hero}>
-          <span>👏 Hey, welcome</span>
-          <h1>News about the <span>React</span> world.</h1>
+          <span>👏 Hey, Welcome </span>
+          <h1>News about the <span>React</span> World.</h1>
           <p>
-            Get access to all the publications <br/>
-            <span>for {product.amount} month</span>
+            Get acess to all the publications <br />
+            <span>for {product.amount} a month</span>
           </p>
-          <SubscribeButton />
+          <SubscribeButton priceId={product.priceId} />
         </section>
-        <img src="/images/avatar.svg" alt="Girl codign" />
+
+        <img src="/images/avatar.svg" alt="Girl coding" />
       </main>
     </>
   )
 }
 
-export const getStaticProps:GetStaticProps = async () => {
-  const price = await stripe.prices.retrieve('price_1IYJ7WCrN0slKqO6rQQZVvOz', {
-    expand: ['product']
-  })
+export const getStaticProps: GetStaticProps = async () => {
+  const price = await stripe.prices.retrieve('price_1LV1QoEe49EYERNfJkGz8ls2')
 
   const product = {
     priceId: price.id,
     amount: new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
-    }).format(price.unit_amount / 100),
-  }
+    }).format(price.unit_amount / 100)
+
+  };
 
   return {
     props: {
-      product
+      product,
     },
-    revalidate: 60 * 60 * 24 // 24 horas
+    revalidate: 60 * 60 * 24, //24 hours
   }
+
 }

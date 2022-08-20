@@ -1,12 +1,13 @@
-import {query as q} from 'faunadb'
-import { fauna } from "../../../services/fauna";
-import { stripe } from '../../../services/stripe';
+import { fauna } from "../../../services/fauna"
+import { queyr as q } from 'faunadb'
+import stripe from "stripe"
 
-export async function saveSubscription(
+export async function saveSubscribtion(
     subscriptionId: string,
     customerId: string,
-    createAction = false
-){
+    createAction = false,
+) {
+    // Find user in FaunaDB with customerId
     const userRef = await fauna.query(
         q.Select(
             "ref",
@@ -19,19 +20,22 @@ export async function saveSubscription(
         )
     )
 
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+    // Save subscription data in FaunaDB
+    const subscription = stripe.subscriptions.retrieve(subscriptionId)
 
     const subscriptionData = {
         id: subscription.id,
         userId: userRef,
         status: subscription.status,
-        price_id: subscription.items.data[0].price.id
+        price_id: subscription.items.data[0].price.id,
+
     }
-    if(createAction){
+
+    if (createAction) {
         await fauna.query(
             q.Create(
                 q.Collection('subscriptions'),
-                {data: subscriptionData}
+                { data: subscriptionData }
             )
         )
     } else {
@@ -42,12 +46,14 @@ export async function saveSubscription(
                     q.Get(
                         q.Match(
                             q.Index('subscription_by_id'),
-                            subscriptionId
+                            subscriptionId,
                         )
                     )
                 ),
-                { data: subscriptionData}
+                { data: subscriptionData }
             )
         )
     }
+
+    return subscription
 }

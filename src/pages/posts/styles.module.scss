@@ -10,13 +10,13 @@
 
     a {
         display: block;
-        cursor: pointer;
-        & + a {
-            margin-top: 2px;
-            padding-top: 2rem;
-            border-top: 1px solid var(--gray-700);
-        }
 
+        & + a {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--gray-700);
+        }
+    
         time {
             font-size: 1rem;
             display: flex;
@@ -29,7 +29,7 @@
             font-size: 1.5rem;
             margin-top: 1rem;
             line-height: 2rem;
-            transition: color 0.2s;
+            transition:  color 0.2s;
         }
 
         p {
@@ -41,5 +41,7 @@
         &:hover strong {
             color: var(--yellow-500);
         }
+
     }
+          
 }
