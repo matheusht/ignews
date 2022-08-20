@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { GetStaticProps } from 'next'
 import Head from '../../node_modules/next/head';
 import { SubscribeButton } from '../components/SubscribeButton/index';
